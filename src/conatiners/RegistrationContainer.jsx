@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import RegistrationPage from "../pages/RegistrationPage";
-import supabase from "../db/supabase";
+import { db, auth } from "../db/firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { setDoc, doc } from "firebase/firestore";
+
 const RegistrationContainer = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [selectedSkills, setSelectedSkills] = useState([]);
   const [describe, setDescribe] = useState("");
-
+  const [error, setError] = useState("");
 
   const handleSelectSkills = (value) => {
     setSelectedSkills(value);
@@ -29,65 +32,43 @@ const RegistrationContainer = () => {
     setDescribe(e.target.value);
   };
 
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log({
-      name,
-      email,
-      password,
-      selectedSkills,
-      describe,
-    });
-
     if (!name || !email || !password) {
-      console.log("Please fill in the fields correctly");
-      return;
-    }
-    const { data: existingUsers, error: fetchError } = await supabase.auth.signUp({
-      email:email,
-      password:password,
-      options:{
-        name:name,
-        describe:describe,
-        selectedSkills:selectedSkills,
-      }
-    })
-      
-
-    if (fetchError) {
-      console.log(fetchError);
+      setError("Please fill in all fields.");
       return;
     }
 
-    if (existingUsers && existingUsers.length > 0) {
-      console.log("Already exists");
-      return;
-    }
-
-    const { data, error } = await supabase
-      .from("connect")
-      .insert([
-        {
-          name: name,
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // User is signed in
+        const user = userCredential.user;
+        console.log(user);
+        // Set additional user data in Firestore
+        return setDoc(doc(db, "Users", user.uid), {
           email: email,
-          password: password,
-          skills: selectedSkills,
+          firstName: name,
+          password: password,  // Note: Storing passwords in Firestore is a serious security risk.
+          skill: selectedSkills,
           describe: describe,
-        },
-      ])
-      .select();
+        });
+      })
+      .then(() => {
+        console.log("User Registered Successfully!!");
+        // Clear form fields after successful registration
+        setName("");
+        setEmail("");
+        setPassword("");
+        setSelectedSkills([]);
+        setDescribe("");
+      })
+      .catch((error) => {
+        console.error("Error registering user: " + error.message);
+        setError(error.message);
+      });
 
-    if (error) {
-      console.log(error);
-    } else if (data) {
-      console.log("Data inserted successfully:", data);
-      // setFormError(null);
-      setEmail("");
-      setPassword("");
-      setName("");
-    }
+    console.log("User registration initiated.");
   };
 
   return (
@@ -98,6 +79,7 @@ const RegistrationContainer = () => {
         password={password}
         selectedSkills={selectedSkills}
         describe={describe}
+        error={error}
         handleNameChange={handleNameChange}
         handleEmailChange={handleEmailChange}
         handlePasswordChange={handlePasswordChange}
