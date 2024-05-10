@@ -48,7 +48,7 @@ const RegistrationContainer = () => {
         // Set additional user data in Firestore
         return setDoc(doc(db, "Users", user.uid), {
           email: email,
-          firstName: name,
+          name: name,
           password: password,  // Note: Storing passwords in Firestore is a serious security risk.
           skill: selectedSkills,
           describe: describe,

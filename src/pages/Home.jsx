@@ -1,9 +1,15 @@
+import { onAuthStateChanged } from "firebase/auth";
 import React, { useEffect, useState } from "react";
-import { auth,  db } from "../db/firebase";
+import { auth, db } from "../db/firebase";
 import { doc, getDoc } from "firebase/firestore";
-// import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+
+import PostContainer from "../conatiners/PostContainer";
+
 function Home() {
   const [userDetails, setUserDetails] = useState(null);
+
+  const navigate = useNavigate();
   const fetchUserData = async () => {
     auth.onAuthStateChanged(async (user) => {
       console.log(user);
@@ -21,6 +27,16 @@ function Home() {
     fetchUserData();
   }, []);
 
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        navigate("/");
+      }
+    });
+
+    return () => unsubscribe();
+  }, [navigate]);
+
   async function handleLogout() {
     try {
       await auth.signOut();
@@ -35,13 +51,16 @@ function Home() {
       {userDetails ? (
         <>
           <h3>Welcome {userDetails.firstName} 🙏🙏</h3>
-          <div>
+          {/* <div>
             <p>Email: {userDetails.email}</p>
             <p>First Name: {userDetails.firstName}</p>
-          </div>
+          </div> */}
+
           <button className="btn btn-primary" onClick={handleLogout}>
             Logout
           </button>
+
+          <PostContainer />
         </>
       ) : (
         <p>Loading...</p>
