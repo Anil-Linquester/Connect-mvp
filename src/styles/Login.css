@@ -26,7 +26,9 @@
     line-height: 19px;
     color: #F1F4FF;
     font-size: 22px;
-}.input-field {
+}
+
+.input-field {
     height: 41px;
     background-color: #0E1E2B; /* Set background color */
     border-radius: 20px;
@@ -82,3 +84,20 @@
   .for-special{
     color: #F1C644;
   }
+
+  .input-field, .input-field-dropdown {
+    height: 41px;
+    background-color: #0E1E2B; /* Set background color */
+    border-radius: 20px;
+    color: #f1f4ff;
+    border: 1px solid #f1f4ff;
+    padding: 0 15px;
+    transition: background-color 0.3s; /* Add transition for smooth color change */
+  }
+  
+  .input-field-dropdown .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
+    background-color: #1890ff; /* Adjust active item background color */
+    color: #fff; /* Adjust active item text color */
+  }
+  
+  
