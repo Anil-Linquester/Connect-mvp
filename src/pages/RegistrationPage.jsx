@@ -24,8 +24,9 @@ const RegistrationPage = ({
   return (
     <div className="login-page">
       <div className="login-box">
-        <form action="" className="login-form" onSubmit={handleSubmit}>
-          <Input
+        <form action="" className="register-form" onSubmit={handleSubmit}>
+        <h1 className="for-loginform-text">Sign up to Connect</h1>
+         <Input
             type="text"
             placeholder="Name of the User"
             className="input-field"
@@ -55,15 +56,18 @@ const RegistrationPage = ({
           />
           <Select
             mode="multiple"
-            style={{ width: "230px" }}
+            style={{ width: "330px" }}
             placeholder="Select skills"
             onChange={handleSelectSkills}
             value={selectedSkills}
             className="input-field"
           >
             {Skills.map((skill) => (
-              <Select.Option style={{ backgroundColor: "#0E1E2B", color: "#f1f4ff" }} // Adjust as needed
-              key={skill.value} value={skill.value}>
+              <Select.Option
+                style={{ backgroundColor: "#0E1E2B", color: "#f1f4ff" }} // Adjust as needed
+                key={skill.value}
+                value={skill.value}
+              >
                 {skill.label}
               </Select.Option>
             ))}

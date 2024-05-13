@@ -15,7 +15,7 @@ const LoginPage = ({
     <div className="login-page">
       <div className="login-box">
         <form action="" className="login-form" onSubmit={submitHandler}>
-          <h1 className="for-loginform-text">Sign up to Connect</h1>
+          <h1 className="for-loginform-text">Sign in to Connect</h1>
           <Input
             type="email"
             value={email}
