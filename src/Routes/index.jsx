@@ -5,6 +5,7 @@ import Home from "../pages/Home";
 import RegistrationContainer from "../conatiners/RegistrationContainer";
 import LandingPage from "../pages/LandingPage";
 import EditFormComponent from "../pages/EditFormComponent";
+import EditFormContaier from "../conatiners/EditFormContainer";
 
 export const Router = createBrowserRouter([
   {
@@ -25,6 +26,6 @@ export const Router = createBrowserRouter([
   },
   {
     path: "/edit-form",
-    element: <EditFormComponent/>
+    element: <EditFormContaier/>
   }
 ]);

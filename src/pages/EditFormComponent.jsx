@@ -39,14 +39,16 @@ const EditFormComponent = ({
   };
 
   useEffect(() => {
+    
     fetchUserData();
   }, []);
 
-  return (
+
+  return userDetails ? (
     <div className="login-page">
       <div className="login-box">
         <form action="" className="register-form" onSubmit={handleSubmit}>
-        <h1 className="for-loginform-text">Sign up to Connect</h1>
+        <h1 className="for-loginform-text">Profile</h1>
          <Input
             type="text"
             placeholder="Name of the User"
@@ -60,13 +62,6 @@ const EditFormComponent = ({
             className="input-field"
             value={email}
             onChange={handleEmailChange}
-          />
-          <Input
-            type="password"
-            placeholder="Password"
-            className="input-field"
-            value={password}
-            onChange={handlePasswordChange}
           />
           <Input
             type="text"
@@ -110,7 +105,7 @@ const EditFormComponent = ({
         </form>
       </div>
     </div>
-  );
+  ):(<div>Loading...</div>);
 };
 
 export default EditFormComponent;
