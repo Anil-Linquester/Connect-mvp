@@ -3,13 +3,14 @@ import React, { useEffect, useState } from "react";
 import { auth, db } from "../db/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
-
 import PostContainer from "../conatiners/PostContainer";
+import EditFormComponent from "./EditFormComponent";
 
 function Home() {
-  const [userDetails, setUserDetails] = useState(null);
-
   const navigate = useNavigate();
+  const [userDetails, setUserDetails] = useState(null);
+  const [canedit,setCanedit] = useState(false)
+
   const fetchUserData = async () => {
     auth.onAuthStateChanged(async (user) => {
       console.log(user);
@@ -23,6 +24,7 @@ function Home() {
       }
     });
   };
+
   useEffect(() => {
     fetchUserData();
   }, []);
@@ -46,20 +48,29 @@ function Home() {
       console.error("Error logging out:", error.message);
     }
   }
+
+    const handleEdit = () => {
+      setCanedit(true);
+      navigate('/edit-form', { state: { userData: userDetails } });
+    };; 
+
+  const handleFormSubmit = (formData) => {
+    // Update user data or perform other actions
+    console.log('Form submitted with data:', formData);
+    // For example, update state with new form data
+    setUserDetails(formData);
+  };
+
   return (
     <div>
       {userDetails ? (
         <>
           <h3>Welcome {userDetails.firstName} 🙏🙏</h3>
-          {/* <div>
-            <p>Email: {userDetails.email}</p>
-            <p>First Name: {userDetails.firstName}</p>
-          </div> */}
-
           <button className="btn btn-primary" onClick={handleLogout}>
             Logout
           </button>
-
+          <button onClick={handleEdit}>Edit</button>
+          {userDetails && canedit &&<EditFormComponent userData={userDetails} onSubmit={handleFormSubmit} />}
           <PostContainer />
         </>
       ) : (
@@ -68,4 +79,5 @@ function Home() {
     </div>
   );
 }
+
 export default Home;
