@@ -37,10 +37,16 @@ const EditFormContaier = () => {
     fetchUserData();
   }, []);
 
-  // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
+    // Check if userDetails is defined before proceeding
+    if (!userDetails || !userDetails.uid) {
+      console.error("User details not available.");
+      setError("User details not available.");
+      return;
+    }
+  
     try {
       const userRef = doc(db, "Users", userDetails.uid);
       await updateDoc(userRef, {
@@ -56,6 +62,7 @@ const EditFormContaier = () => {
       setError(error.message);
     }
   };
+  
 
   return userDetails ? ((
     <div>
@@ -77,7 +84,7 @@ const EditFormContaier = () => {
       />
     </div>
     ) 
-  ):(<div>Loading...</div>);
+  ):(<div> Loading...</div>);
 };
 
 export default EditFormContaier;
