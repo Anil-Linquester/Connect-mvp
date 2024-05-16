@@ -1,11 +1,9 @@
-// Import useState and useEffect
 import React, { useState, useEffect } from "react";
 import { auth, db } from "../db/firebase";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import EditFormComponent from "../pages/EditFormComponent";
 
-const EditFormContaier = () => {
-  // State variables and functions for handling user data
+const EditFormContainer = () => {
   const [userDetails, setUserDetails] = useState(null);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -14,21 +12,23 @@ const EditFormContaier = () => {
   const [location, setLocation] = useState("");
   const [error, setError] = useState("");
 
-  // Fetch user data from Firestore
   useEffect(() => {
     const fetchUserData = async () => {
       auth.onAuthStateChanged(async (user) => {
-        console.log(user);
-        const docRef = doc(db, "Users", user.uid);
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          const userData = docSnap.data();
-          setUserDetails(userData);
-          setName(userData.name);
-          setEmail(userData.email);
-          setSelectedSkills(userData.skill);
-          setDescribe(userData.describe);
-          setLocation(userData.location);
+        if (user) {
+          const docRef = doc(db, "Users", user.uid);
+          const docSnap = await getDoc(docRef);
+          if (docSnap.exists()) {
+            const userData = docSnap.data();
+            setUserDetails(userData);
+            setName(userData.name);
+            setEmail(userData.email);
+            setSelectedSkills(userData.skill);
+            setDescribe(userData.describe);
+            setLocation(userData.location);
+          } else {
+            console.log("User data not found in Firestore");
+          }
         } else {
           console.log("User is not logged in");
         }
@@ -39,16 +39,9 @@ const EditFormContaier = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
-    // Check if userDetails is defined before proceeding
-    if (!userDetails || !userDetails.uid) {
-      console.error("User details not available.");
-      setError("User details not available.");
-      return;
-    }
-  
+
     try {
-      const userRef = doc(db, "Users", userDetails.uid);
+      const userRef = doc(db, "Users", auth.currentUser.uid);
       await updateDoc(userRef, {
         name: name,
         email: email,
@@ -62,29 +55,25 @@ const EditFormContaier = () => {
       setError(error.message);
     }
   };
-  
 
-  return userDetails ? ((
-    <div>
-      {/* Pass necessary props to EditFormComponent */}
-      <EditFormComponent
-        name={name}
-        email={email}
-        selectedSkills={selectedSkills}
-        describe={describe}
-        location={location}
-        error={error}
-        // Pass functions to handle input changes
-        handleNameChange={(e) => setName(e.target.value)}
-        handleEmailChange={(e) => setEmail(e.target.value)}
-        handleSelectSkills={(value) => setSelectedSkills(value)}
-        handleDescribeChange={(e) => setDescribe(e.target.value)}
-        handleLocationChange={(e) => setLocation(e.target.value)}
-        handleSubmit={handleSubmit}
-      />
-    </div>
-    ) 
-  ):(<div> Loading...</div>);
+  return userDetails ? (
+    <EditFormComponent
+      name={name}
+      email={email}
+      selectedSkills={selectedSkills}
+      describe={describe}
+      location={location}
+      error={error}
+      handleNameChange={(e) => setName(e.target.value)}
+      handleEmailChange={(e) => setEmail(e.target.value)}
+      handleSelectSkills={(value) => setSelectedSkills(value)}
+      handleDescribeChange={(e) => setDescribe(e.target.value)}
+      handleLocationChange={(e) => setLocation(e.target.value)}
+      handleSubmit={handleSubmit}
+    />
+  ) : (
+    <div>Loading...</div>
+  );
 };
 
-export default EditFormContaier;
+export default EditFormContainer;

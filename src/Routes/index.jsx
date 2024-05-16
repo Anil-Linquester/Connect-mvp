@@ -6,6 +6,7 @@ import RegistrationContainer from "../conatiners/RegistrationContainer";
 import LandingPage from "../pages/LandingPage";
 import EditFormComponent from "../pages/EditFormComponent";
 import EditFormContaier from "../conatiners/EditFormContainer";
+import PostContainer from "../conatiners/PostContainer";
 
 export const Router = createBrowserRouter([
   {
@@ -27,5 +28,9 @@ export const Router = createBrowserRouter([
   {
     path: "/edit-form",
     element: <EditFormContaier/>
+  },
+  {
+    path: "/post",
+    element: <PostContainer/>
   }
 ]);
