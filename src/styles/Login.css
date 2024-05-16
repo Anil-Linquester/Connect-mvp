@@ -1,0 +1,111 @@
+.login-page{
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+    background-color: #0E1E2B;
+    height: 100vh;
+}
+
+.login-box{
+    padding: 20px;
+    border: 1px solid rgb(202, 195, 195);
+    border-radius: 10px;
+}
+
+.login-form{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    height: 430px;
+    width: 370px;
+}
+
+.for-loginform-text{
+    line-height: 19px;
+    color: #F1F4FF;
+    font-size: 22px;
+}
+
+.input-field {
+    height: 41px;
+    background-color: #0E1E2B; /* Set background color */
+    border-radius: 20px;
+    color: #f1f4ff;
+    border: 1px solid #f1f4ff;
+    padding: 0 15px;
+    transition: background-color 0.3s; /* Add transition for smooth color change */
+  }
+  
+  .input-field:hover {
+    background-color: #0E1E2B; /* Ensure consistent background color on hover */
+    border-color: #d3d9ee;
+  }
+  
+  .input-field:focus {
+    outline: none;
+    background-color: #0E1E2B; /* Ensure consistent background color on focus */
+    box-shadow: 0 0 0 2px rgba(65, 87, 168, 0.5);
+  }
+  
+  .input-field::placeholder {
+    color: white;
+    font-style: italic;
+  }
+  
+  .submit {
+    background-color: #F1C644;
+    color: white;
+    height: 41px;
+    width: 300px;
+    font-size: 20px;
+    border-radius: 20px;
+    padding: 0 20px;
+    cursor: pointer; 
+    transition: background-color 0.3s;
+  }
+  
+  .submit:hover {
+    background-color: #b99418;
+    }
+  
+  .submit:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(248, 212, 10, 0.5);
+  }
+
+  .for-text{
+    color: rgb(233, 228, 228);
+    margin-left: 6px;
+    margin-top: -4px;
+  }
+
+  .for-special{
+    color: #F1C644;
+  }
+
+  .input-field, .input-field-dropdown {
+    height: 41px;
+    background-color: #0E1E2B; /* Set background color */
+    border-radius: 20px;
+    color: #f1f4ff;
+    border: 1px solid #f1f4ff;
+    padding: 0 15px;
+    transition: background-color 0.3s; /* Add transition for smooth color change */
+  }
+  
+  .input-field-dropdown .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
+    background-color: #1890ff; /* Adjust active item background color */
+    color: #fff; /* Adjust active item text color */
+  }
+    
+  .register-form{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    height: 530px;
+    width: 370px;
+  }

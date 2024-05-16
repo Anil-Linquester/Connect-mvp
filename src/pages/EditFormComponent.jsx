@@ -1,17 +1,18 @@
-import React from "react";
-import { Select, Input } from "antd";
+import React, { useState, useEffect } from "react";
+import { auth, db } from "../db/firebase";
+import { doc, getDoc } from "firebase/firestore";
 import { Skills } from "../constants/Skills";
+import { Select, Input } from "antd";
 import "../styles/Login.css";
-// import '../../styles/freelancer/register.css'
 
-const RegistrationPage = ({
+
+const EditFormComponent = ({
   name,
   email,
   password,
   selectedSkills,
   describe,
   location,
-  collage,
   handleCollageChange,
   handleLocationChange,
   handleNameChange,
@@ -21,11 +22,33 @@ const RegistrationPage = ({
   handleDescribeChange,
   handleSubmit,
 }) => {
-  return (
+  const [userDetails, setUserDetails] = useState(null);
+
+  const fetchUserData = async () => {
+    auth.onAuthStateChanged(async (user) => {
+      console.log(user);
+      const docRef = doc(db, "Users", user.uid);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        setUserDetails(docSnap.data());
+        console.log(docSnap.data());
+      } else {
+        console.log("User is not logged in");
+      }
+    });
+  };
+
+  useEffect(() => {
+    
+    fetchUserData();
+  }, []);
+
+
+  return userDetails ? (
     <div className="login-page">
       <div className="login-box">
         <form action="" className="register-form" onSubmit={handleSubmit}>
-        <h1 className="for-loginform-text">Sign up to Connect</h1>
+        <h1 className="for-loginform-text">Profile</h1>
          <Input
             type="text"
             placeholder="Name of the User"
@@ -39,13 +62,6 @@ const RegistrationPage = ({
             className="input-field"
             value={email}
             onChange={handleEmailChange}
-          />
-          <Input
-            type="password"
-            placeholder="Password"
-            className="input-field"
-            value={password}
-            onChange={handlePasswordChange}
           />
           <Input
             type="text"
@@ -89,7 +105,7 @@ const RegistrationPage = ({
         </form>
       </div>
     </div>
-  );
+  ):(<div>Loading...</div>);
 };
 
-export default RegistrationPage;
+export default EditFormComponent;
