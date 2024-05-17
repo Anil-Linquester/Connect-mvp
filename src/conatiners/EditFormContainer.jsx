@@ -12,6 +12,16 @@ const EditFormContainer = () => {
   const [location, setLocation] = useState("");
   const [error, setError] = useState("");
 
+  // New state for project details
+  const [projectName, setProjectName] = useState("");
+  const [projectDescription, setProjectDescription] = useState("");
+  const [projectLink, setProjectLink] = useState("");
+
+  // New state for internship details
+  const [internshipTitle, setInternshipTitle] = useState("");
+  const [internshipDescription, setInternshipDescription] = useState("");
+  const [internshipLink, setInternshipLink] = useState("");
+
   useEffect(() => {
     const fetchUserData = async () => {
       auth.onAuthStateChanged(async (user) => {
@@ -26,6 +36,18 @@ const EditFormContainer = () => {
             setSelectedSkills(userData.skill);
             setDescribe(userData.describe);
             setLocation(userData.location);
+            // Populate project details if they exist
+            if (userData.project) {
+              setProjectName(userData.project.name);
+              setProjectDescription(userData.project.description);
+              setProjectLink(userData.project.link);
+            }
+            // Populate internship details if they exist
+            if (userData.internship) {
+              setInternshipTitle(userData.internship.title);
+              setInternshipDescription(userData.internship.description);
+              setInternshipLink(userData.internship.link);
+            }
           } else {
             console.log("User data not found in Firestore");
           }
@@ -48,6 +70,16 @@ const EditFormContainer = () => {
         skill: selectedSkills,
         describe: describe,
         location: location,
+        project: {
+          name: projectName,
+          description: projectDescription,
+          link: projectLink,
+        },
+        internship: {
+          title: internshipTitle,
+          description: internshipDescription,
+          link: internshipLink,
+        },
       });
       console.log("User information updated successfully!");
     } catch (error) {
@@ -63,12 +95,24 @@ const EditFormContainer = () => {
       selectedSkills={selectedSkills}
       describe={describe}
       location={location}
+      projectName={projectName}
+      projectDescription={projectDescription}
+      projectLink={projectLink}
+      internshipTitle={internshipTitle}
+      internshipDescription={internshipDescription}
+      internshipLink={internshipLink}
       error={error}
       handleNameChange={(e) => setName(e.target.value)}
       handleEmailChange={(e) => setEmail(e.target.value)}
       handleSelectSkills={(value) => setSelectedSkills(value)}
       handleDescribeChange={(e) => setDescribe(e.target.value)}
       handleLocationChange={(e) => setLocation(e.target.value)}
+      handleProjectNameChange={(e) => setProjectName(e.target.value)}
+      handleProjectDescriptionChange={(e) => setProjectDescription(e.target.value)}
+      handleProjectLinkChange={(e) => setProjectLink(e.target.value)}
+      handleInternshipTitleChange={(e) => setInternshipTitle(e.target.value)}
+      handleInternshipDescriptionChange={(e) => setInternshipDescription(e.target.value)}
+      handleInternshipLinkChange={(e) => setInternshipLink(e.target.value)}
       handleSubmit={handleSubmit}
     />
   ) : (

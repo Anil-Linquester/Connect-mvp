@@ -5,33 +5,39 @@ import { Skills } from "../constants/Skills";
 import { Select, Input } from "antd";
 import "../styles/Login.css";
 
-
 const EditFormComponent = ({
   name,
   email,
-  password,
   selectedSkills,
   describe,
   location,
-  handleCollageChange,
-  handleLocationChange,
+  projectName,
+  projectDescription,
+  projectLink,
+  internshipTitle,
+  internshipDescription,
+  internshipLink,
   handleNameChange,
   handleEmailChange,
-  handlePasswordChange,
   handleSelectSkills,
   handleDescribeChange,
+  handleLocationChange,
+  handleProjectNameChange,
+  handleProjectDescriptionChange,
+  handleProjectLinkChange,
+  handleInternshipTitleChange,
+  handleInternshipDescriptionChange,
+  handleInternshipLinkChange,
   handleSubmit,
 }) => {
   const [userDetails, setUserDetails] = useState(null);
 
   const fetchUserData = async () => {
     auth.onAuthStateChanged(async (user) => {
-      console.log(user);
       const docRef = doc(db, "Users", user.uid);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         setUserDetails(docSnap.data());
-        console.log(docSnap.data());
       } else {
         console.log("User is not logged in");
       }
@@ -39,17 +45,15 @@ const EditFormComponent = ({
   };
 
   useEffect(() => {
-    
     fetchUserData();
   }, []);
-
 
   return userDetails ? (
     <div className="login-page">
       <div className="login-box">
-        <form action="" className="register-form" onSubmit={handleSubmit}>
-        <h1 className="for-loginform-text">Profile</h1>
-         <Input
+        <form className="register-form" onSubmit={handleSubmit}>
+          <h1 className="for-loginform-text">Profile</h1>
+          <Input
             type="text"
             placeholder="Name of the User"
             className="input-field"
@@ -80,7 +84,7 @@ const EditFormComponent = ({
           >
             {Skills.map((skill) => (
               <Select.Option
-                style={{ backgroundColor: "#0E1E2B", color: "#f1f4ff" }} // Adjust as needed
+                style={{ backgroundColor: "#0E1E2B", color: "#f1f4ff" }}
                 key={skill.value}
                 value={skill.value}
               >
@@ -88,13 +92,54 @@ const EditFormComponent = ({
               </Select.Option>
             ))}
           </Select>
-
           <Input
             type="text"
             placeholder="Describe yourself"
             className="input-field"
             value={describe}
             onChange={handleDescribeChange}
+          />
+          <Input
+            type="text"
+            placeholder="Project Name"
+            className="input-field"
+            value={projectName}
+            onChange={handleProjectNameChange}
+          />
+          <Input
+            type="text"
+            placeholder="Project Description"
+            className="input-field"
+            value={projectDescription}
+            onChange={handleProjectDescriptionChange}
+          />
+          <Input
+            type="url"
+            placeholder="Project Link"
+            className="input-field"
+            value={projectLink}
+            onChange={handleProjectLinkChange}
+          />
+          <Input
+            type="text"
+            placeholder="Internship Title"
+            className="input-field"
+            value={internshipTitle}
+            onChange={handleInternshipTitleChange}
+          />
+          <Input
+            type="text"
+            placeholder="Internship Description"
+            className="input-field"
+            value={internshipDescription}
+            onChange={handleInternshipDescriptionChange}
+          />
+          <Input
+            type="link"
+            placeholder="Internship Certificate Link"
+            className="input-field"
+            value={internshipLink}
+            onChange={handleInternshipLinkChange}
           />
           <Input
             type="submit"
@@ -105,7 +150,9 @@ const EditFormComponent = ({
         </form>
       </div>
     </div>
-  ):(<div>Loading...</div>);
+  ) : (
+    <div>Loading...</div>
+  );
 };
 
 export default EditFormComponent;
