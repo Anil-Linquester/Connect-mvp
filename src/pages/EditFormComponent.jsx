@@ -114,7 +114,7 @@ const EditFormComponent = ({
             onChange={handleProjectDescriptionChange}
           />
           <Input
-            type="text"
+            type="url"
             placeholder="Project Link"
             className="input-field"
             value={projectLink}
@@ -135,7 +135,7 @@ const EditFormComponent = ({
             onChange={handleInternshipDescriptionChange}
           />
           <Input
-            type="text"
+            type="link"
             placeholder="Internship Certificate Link"
             className="input-field"
             value={internshipLink}
