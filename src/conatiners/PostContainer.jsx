@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import PostPage from "../components/common/PostsPage/PostPage";
-import { postAPI, fetchPostsAPI } from "../Api/PostPageApi";
+import { postAPI } from "../Api/PostPageApi"; // Assuming postAPI exists for posting new content
+import { useNavigate } from "react-router-dom";
 
 const PostContainer = () => {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
-  const [userPosts, setUserPosts] = useState([]);
+  const navigate = useNavigate();
 
   const titleHandler = (e) => {
     setTitle(e.target.value);
@@ -17,22 +18,13 @@ const PostContainer = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    const response = await postAPI(title, text);
+    const response = await postAPI(title, text); // Using postAPI to post new content
     if (response.success) {
       setTitle("");
       setText("");
-      fetchUserPosts();
+      navigate("/home");
     } else {
-      console.error(response.message);
-    }
-  };
-
-  const fetchUserPosts = async () => {
-    const response = await fetchPostsAPI();
-    if (response.success) {
-      setUserPosts(response.data);
-    } else {
-      console.error(response.message);
+      console.log(response.message);
     }
   };
 
@@ -45,17 +37,7 @@ const PostContainer = () => {
         textHandler={textHandler}
         submitHandler={submitHandler}
       />
-      <div>
-        <h2>User Posts</h2>
-        <ul>
-          {userPosts.map((post) => (
-            <li key={post.id}>
-              <h3>{post.title}</h3>
-              <p>{post.text}</p>
-            </li>
-          ))}
-        </ul>
-      </div>
+      <div></div>
     </div>
   );
 };

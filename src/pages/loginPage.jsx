@@ -38,7 +38,7 @@ const LoginPage = ({
             <input className="for-checkbox" type="checkbox" value={{}} />
             <span class="for-text">Remember Me</span>
           </label>{" "}
-          <a className="for-special">Forget your Password ? </a>
+          <p className="for-special">Forget your Password ? </p>
           <h1 className="for-text">
             Don't have a Connect ID ? <span className="for-special">Create your's now</span>
           </h1>

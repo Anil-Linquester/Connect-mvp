@@ -33,7 +33,7 @@ const LoginContainer = () => {
       }
     });
     return () => unsubscribe(); // Unsubscribe from auth state changes when component unmounts
-  }, [navigate]); // Added navigate as a dependency
+  }, [navigate]); // Added auth as a dependency
   return (
     <LoginPage
       email={email}

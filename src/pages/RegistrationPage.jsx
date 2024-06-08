@@ -2,7 +2,6 @@ import React from "react";
 import { Select, Input } from "antd";
 import { Skills } from "../constants/Skills";
 import "../styles/Login.css";
-// import '../../styles/freelancer/register.css'
 
 const RegistrationPage = ({
   name,
@@ -11,22 +10,21 @@ const RegistrationPage = ({
   selectedSkills,
   describe,
   location,
-  collage,
-  handleCollageChange,
-  handleLocationChange,
+  error,
   handleNameChange,
   handleEmailChange,
   handlePasswordChange,
   handleSelectSkills,
   handleDescribeChange,
+  handleLocationChange,
   handleSubmit,
 }) => {
   return (
     <div className="login-page">
       <div className="login-box">
         <form action="" className="register-form" onSubmit={handleSubmit}>
-        <h1 className="for-loginform-text">Sign up to Connect</h1>
-         <Input
+          <h1 className="for-loginform-text">Sign up to Connect</h1>
+          <Input
             type="text"
             placeholder="Name of the User"
             className="input-field"
@@ -72,7 +70,6 @@ const RegistrationPage = ({
               </Select.Option>
             ))}
           </Select>
-
           <Input
             type="text"
             placeholder="Describe yourself"
@@ -86,6 +83,7 @@ const RegistrationPage = ({
             className="input-field"
             style={{ backgroundColor: "rgb(250, 208, 129)" }}
           />
+          {error && <div className="error-message">{error}</div>}
         </form>
       </div>
     </div>

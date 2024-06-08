@@ -10,6 +10,7 @@ const RegistrationContainer = () => {
   const [password, setPassword] = useState("");
   const [selectedSkills, setSelectedSkills] = useState([]);
   const [describe, setDescribe] = useState("");
+  const [location, setLocation] = useState("");
   const [error, setError] = useState("");
 
   const handleSelectSkills = (value) => {
@@ -28,6 +29,10 @@ const RegistrationContainer = () => {
     setPassword(e.target.value);
   };
 
+  const handleLocationChange = (e) => {
+    setLocation(e.target.value);
+  };
+
   const handleDescribeChange = (e) => {
     setDescribe(e.target.value);
   };
@@ -35,7 +40,7 @@ const RegistrationContainer = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!name || !email || !password) {
+    if (!name || !email || !password || !location) {
       setError("Please fill in all fields.");
       return;
     }
@@ -52,6 +57,7 @@ const RegistrationContainer = () => {
           password: password,  // Note: Storing passwords in Firestore is a serious security risk.
           skill: selectedSkills,
           describe: describe,
+          location: location, // Include location in user data
         });
       })
       .then(() => {
@@ -62,6 +68,8 @@ const RegistrationContainer = () => {
         setPassword("");
         setSelectedSkills([]);
         setDescribe("");
+        setLocation("");
+        setError("");
       })
       .catch((error) => {
         console.error("Error registering user: " + error.message);
@@ -79,12 +87,14 @@ const RegistrationContainer = () => {
         password={password}
         selectedSkills={selectedSkills}
         describe={describe}
+        location={location}
         error={error}
         handleNameChange={handleNameChange}
         handleEmailChange={handleEmailChange}
         handlePasswordChange={handlePasswordChange}
         handleSelectSkills={handleSelectSkills}
         handleDescribeChange={handleDescribeChange}
+        handleLocationChange={handleLocationChange}
         handleSubmit={handleSubmit}
       />
     </div>
