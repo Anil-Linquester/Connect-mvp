@@ -38,11 +38,12 @@ const PostDisplay = () => {
     <div className="posts-container">
       {posts.map((post) => (
         <div key={post.id} className="post">
+          <p>
+            {post.author.name}
+          </p>
           <h2>{post.title}</h2>
           <p>{post.text}</p>
-          <p>
-            <strong>Posted by:</strong> {post.author.name}
-          </p>
+
         </div>
       ))}
     </div>

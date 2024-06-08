@@ -1,6 +1,7 @@
 import React from "react";
 import { Select } from "antd";
 import { Skills } from "../../constants/Skills";
+import './studentsearch.css'
 const StudentSearch = ({ skill, skillHandler }) => {
   return (
     <div>
@@ -10,7 +11,7 @@ const StudentSearch = ({ skill, skillHandler }) => {
           placeholder="Select skills"
           value={skill}
           onChange={skillHandler}
-          className="input-field"
+          className="input-fiel"
         >
           {Skills.map((skill) => (
             <Select.Option

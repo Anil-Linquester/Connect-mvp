@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 // import PostContainer from "../conatiners/PostContainer";
 import { PostSend } from "../components/common/Buttons/Buttons";
 import EditFormComponent from "./EditFormComponent";
-
+import '../styles/home.css'
 import StudentSearchContainer from "../conatiners/studentSearchContainer";
 import PostDisplay from "../components/PostDisplay/PostDisplay";
 
